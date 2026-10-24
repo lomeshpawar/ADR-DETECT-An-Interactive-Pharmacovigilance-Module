@@ -1,151 +1,96 @@
-# ADR-DETECT: An Interactive Pharmacovigilance Module
-> **"Detect -> Assess -> Intervene -> Report"**  
-> *Good Pharmacovigilance Helps in Patient Safety*
+# ADR-DETECT — Interactive Pharmacovigilance Learning Module
 
-ADR-DETECT is an interactive, data-driven educational healthcare web application designed to train pharmacy students, clinical pharmacologists, and medical learners on Adverse Drug Reaction (ADR) detection, causality assessment, clinical intervention, and standardized reporting.
+> An educational web simulation for practicing adverse drug reaction (ADR) detection, causality assessment, intervention planning, and structured reporting.
 
-## 🌐 Live Demo
+## Live frontend
 
-**Frontend – GitHub Pages:**  
-https://lomeshpawar.github.io/ADR-DETECT-An-Interactive-Pharmacovigilance-Module/
+**[Open ADR-DETECT on GitHub Pages](https://lomeshpawar.github.io/ADR-DETECT-An-Interactive-Pharmacovigilance-Module/)**
 
-> The frontend is deployed as a static React/Vite application through **GitHub Pages + GitHub Actions**. The Spring Boot backend is a separate service and is not hosted by GitHub Pages.
+GitHub Pages publishes the React/Vite frontend as a static site. The current learning workflow runs in the browser; the separate Spring Boot backend is not hosted by GitHub Pages. Confirm backend-dependent functionality independently before describing the entire stack as publicly live.
 
-## ⚡ Quick Start on Windows (No Bash Required)
+## Learning workflow
 
-You can run the application locally using the provided Windows batch files or Windows PowerShell.
+The application organizes a practice case into five learning stations:
 
-### Option 1: 1-Click Launcher
+1. **Patient case** — review a simulated patient profile, observations, and medication history.
+2. **Detective station** — inspect clues and timelines relevant to a suspected reaction.
+3. **ADR assessment** — practice selecting a suspected drug, reaction, reaction type, severity, and causality assessment.
+4. **Intervention** — explore possible pharmacist intervention and monitoring choices.
+5. **Reporting** — complete a structured educational report and review the generated result.
 
-- Double-click **`start_all.bat`** in the project folder.
-- It launches the Spring Boot backend and React frontend.
+The module also includes a case bank, dashboard, learning content, and project information pages.
 
-### Option 2: Windows PowerShell
-
-#### Backend
-
-```powershell
-cd "backend"
-mvn spring-boot:run
-```
-
-Backend:
-
-```text
-http://localhost:8085
-```
-
-Swagger API Docs:
-
-```text
-http://localhost:8085/swagger-ui.html
-```
-
-H2 Console:
-
-```text
-http://localhost:8085/h2-console
-```
-
-#### React Frontend
-
-```powershell
-cd "frontend"
-npm install
-npm run dev
-```
-
-Local frontend:
-
-```text
-http://localhost:3000
-```
-
-### Option 3: Windows Command Prompt
-
-Backend:
-
-```cmd
-cd backend
-mvn spring-boot:run
-```
-
-Frontend:
-
-```cmd
-cd frontend
-npm install
-npm run dev
-```
-
-## 🌟 Key Features & 5-Station Architecture
-
-1. **🔵 Station 1: Patient Case**
-   - Patient profile, demographics, vitals, diagnosis, and current medication regimen.
-2. **🟢 Station 2: Detective Station**
-   - Interactive clinical clue cards covering medicine history, timeline, past history, allergy history, lab reports, and dechallenge/rechallenge.
-3. **🟡 Station 3: ADR Assessment**
-   - Suspected drug identification, adverse reaction identification, configurable Reaction Type (A-F), severity, and WHO-UMC causality.
-4. **🟣 Station 4: Pharmacist Intervention**
-   - Clinical intervention actions such as stopping a drug, adjusting dosage, symptomatic care, referral, and monitoring.
-5. **🔴 Station 5: ADR Reporting**
-   - Standardized digital pharmacovigilance reporting form.
-6. **100-Point Scoring Engine**
-   - Suspected Drug (15) + Reaction (15) + Type A-F (20) + Severity (15) + Causality (15) + Intervention (10) + Reporting (10) = 100 Points.
-
-## 🛠️ Technology Stack
+## Technology stack
 
 | Layer | Technology |
 |---|---|
 | Frontend | React, Vite, JavaScript |
+| Routing | React Router |
+| HTTP client | Axios |
+| UI and icons | Tailwind CSS, Lucide React |
 | Backend | Java, Spring Boot |
-| API Documentation | Swagger / OpenAPI |
-| Database | H2 / backend-configured persistence |
-| Frontend Hosting | GitHub Pages |
-| Deployment | GitHub Actions |
+| API documentation | Swagger / OpenAPI |
+| Frontend hosting | GitHub Pages |
+| Deployment automation | GitHub Actions |
 
-## ☁️ GitHub Pages Deployment
-
-The repository contains a GitHub Actions workflow at:
+## Repository structure
 
 ```text
-.github/workflows/pages.yml
+ADR-DETECT-An-Interactive-Pharmacovigilance-Module/
+├── frontend/                 # React/Vite application
+│   ├── src/
+│   │   ├── components/       # Shared UI components
+│   │   ├── context/          # Case workflow state
+│   │   └── pages/            # Home, cases, workflow, results, learn
+│   ├── package.json
+│   └── vite.config.js
+├── backend/                  # Spring Boot service
+├── .github/workflows/
+│   └── pages.yml             # Build and deploy frontend
+├── start_all.bat             # Windows local launcher
+├── start_backend.bat
+└── start_frontend.bat
 ```
 
-The deployment flow is:
+## Run locally on Windows
 
-```text
-GitHub Repository
-       │
-       ▼
-GitHub Actions
-       │
-       ├── npm ci
-       ├── Vite production build
-       └── Upload Pages artifact
-       │
-       ▼
-GitHub Pages
+### Frontend
+
+```powershell
+cd frontend
+npm ci
+npm run dev
 ```
 
-The Vite build uses the repository project path as its Pages base path so static assets resolve correctly on the project site.
+Open the local URL printed by Vite in the terminal.
 
-To deploy an update:
+### Backend
 
-```bash
-git add frontend .github/workflows/pages.yml
-git commit -m "update: frontend"
-git push origin main
+In a separate terminal:
+
+```powershell
+cd backend
+mvn spring-boot:run
 ```
 
-GitHub Actions automatically rebuilds and publishes the frontend.
+The repository's local configuration uses port `8085` for the backend. API-dependent features require the backend to be running and the frontend API configuration to match it.
 
-## 🔒 Medical Safety Disclaimer
+Alternatively, use the provided `start_all.bat`, `start_backend.bat`, and `start_frontend.bat` launchers on Windows.
 
-> **ADR-DETECT** is an interactive educational simulation designed strictly for teaching pharmacovigilance principles. It does not replace professional medical judgment, official regulatory ADR reporting programs (such as PvPI or MedWatch), or institutional clinical guidelines.
+## GitHub Pages deployment
 
-## 👨‍💻 Author
+The workflow at `.github/workflows/pages.yml` installs the frontend dependencies, builds the Vite application with the repository path as the base URL, and publishes the build output to GitHub Pages.
 
-**Lomesh Pawar**
+After pushing frontend changes to `main`, open **Actions** and verify the latest **Deploy Frontend to GitHub Pages** workflow completes successfully.
 
-GitHub: https://github.com/lomeshpawar
+## Important scope and safety notice
+
+ADR-DETECT is an educational simulation, not a clinical decision-support system. It must not be used to diagnose or treat patients, make actual prescribing decisions, or replace professional medical judgment, institutional protocols, or official adverse-reaction reporting programs. Use only fictional or appropriately de-identified case information.
+
+## Project status
+
+Academic learning application. The static React frontend is published through GitHub Pages; backend-dependent functionality requires the separate Spring Boot service to be available and configured.
+
+## Author
+
+**Lomesh Pawar** · [GitHub](https://github.com/lomeshpawar)

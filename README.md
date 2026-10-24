@@ -6,6 +6,8 @@
 
 **[Open ADR-DETECT on GitHub Pages](https://lomeshpawar.github.io/ADR-DETECT-An-Interactive-Pharmacovigilance-Module/)**
 
+**Frontend deployment workflow:** https://github.com/lomeshpawar/ADR-DETECT-An-Interactive-Pharmacovigilance-Module/actions/workflows/pages.yml
+
 GitHub Pages publishes the React/Vite frontend as a static site. The current learning workflow runs in the browser; the separate Spring Boot backend is not hosted by GitHub Pages. Confirm backend-dependent functionality independently before describing the entire stack as publicly live.
 
 ## Learning workflow

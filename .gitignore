@@ -1,0 +1,30 @@
+# Java / Maven build output
+backend/target/
+*.class
+*.log
+
+# Node.js / Vite generated output
+frontend/node_modules/
+frontend/dist/
+.npm/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Local databases
+*.db
+*.sqlite
